@@ -1,15 +1,19 @@
 import AppliedJobsTable from '@/components/shared/AppliedJobsTable'
 import Navbar from '@/components/shared/Navbar'
+import UpdateProfileDialog from '@/components/shared/UpdateProfileDialog'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Contact, Mail, Pen } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
+
+const skills = ["HTML", "ReactJS", "JavaScript", "MongoDB"];
+const hasResume = true;
 
 const Profile = () => {
-    const skills = ["HTML", "ReactJS", "JavaScript", "MongoDB"];
-    const hasResume = true;
+    const [open, setOpen] = useState(false);
+
     return (
         <div>
             <Navbar />
@@ -24,7 +28,7 @@ const Profile = () => {
                             <p>The sky was painted with shades of pink and gold as the sun dipped below the horizon. A cool breeze whispered through the trees, carrying the scent of pine and earth. Somewhere in the distance, a bird sang a soft melody, echoing through the quiet evening.</p>
                         </div>
                     </div>
-                    <Button className='text-right border border-gray-300 rounded-xl hover:bg-gray-200'><Pen /></Button>
+                    <Button onClick={() => setOpen(true)} className='text-right border border-gray-300 rounded-xl hover:bg-gray-200'><Pen /></Button>
                 </div>
                 <div className='my-3'>
                     <div className="flex items-center gap-4 my-3">
@@ -40,7 +44,7 @@ const Profile = () => {
                     <h1 className='font-medium text-lg'>Skills</h1>
                     <div className="flex items-center gap-2 my-2">
                         {
-                            skills.length !== 0 ? skills.map((item, index) => <Badge key={index} className={"bg-black text-white"}>{item}</Badge>) : <span>NA</span>
+                            skills.length !== 0 ? skills.map((item, index) => <Badge key={index} className={"bg-black text-white hover:bg-black"}>{item}</Badge>) : <span>NA</span>
                         }
                     </div>
                 </div>
@@ -55,6 +59,7 @@ const Profile = () => {
                 <h1 className='font-bold text-lg my-5'>Applied Jobs</h1>
                 <AppliedJobsTable />
             </div>
+            <UpdateProfileDialog open={open} setOpen={setOpen}/>
         </div>
     )
 }

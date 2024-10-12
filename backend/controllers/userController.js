@@ -59,7 +59,8 @@ export const login = async (req, res) => {
             role : user.role,
             firstName : user.firstName,
             lastName : user.lastName,
-            profile : user.profile
+            profile : user.profile,
+            phoneNo : user.phoneNo,
         }
 
         console.log("Log In complete");

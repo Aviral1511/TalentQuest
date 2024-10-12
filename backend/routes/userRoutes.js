@@ -8,6 +8,6 @@ import { singleUpload } from "../middlewares/multer.js";
 router.post("/signup",singleUpload, signup);
 router.post("/login", login);
 router.get("/logout", logout);
-router.post("/profile/update", isAuthenticated, updateProfile);
+router.post("/profile/update", isAuthenticated, singleUpload, updateProfile);
 
 export default router;
