@@ -1,4 +1,5 @@
 import CategoryCarousel from '@/components/shared/CategoryCarousel'
+import Footer from '@/components/shared/Footer'
 import HeroSection from '@/components/shared/HeroSection'
 import LatestJobs from '@/components/shared/LatestJobs'
 import Navbar from '@/components/shared/Navbar'
@@ -11,6 +12,7 @@ const HomePage = () => {
         <HeroSection />
         <CategoryCarousel />
         <LatestJobs />
+        <Footer />
     </div>
   )
 }

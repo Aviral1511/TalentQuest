@@ -2,7 +2,7 @@ import Navbar from '@/components/shared/Navbar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { setLoading } from '@/redux/authSlice'
+import { setLoading, setUser } from '@/redux/authSlice'
 import { USER_API_END_POINT } from '@/utils/endPoints'
 import { RadioGroup } from '@radix-ui/react-radio-group'
 import axios from 'axios'
@@ -37,6 +37,7 @@ const Login = () => {
                 withCredentials:true,
             });
             if(res.data.success){
+                dispatch(setUser(res.data.user));
                 toast.success(res.data.message);
                 navigate('/');
             }
@@ -80,7 +81,7 @@ const Login = () => {
                         <Button type='submit' className='w-full my-4 border border-black rounded-md bg-purple-400 hover:border-violet-600 hover:border-2 hover:bg-violet-500'>Login</Button>
                     }
                     
-                    <span className='block text-center font-semibold text-base'>Don't have an account ?<Link to={'/signup'} className='text-blue-600'>  Sign Up</Link></span>
+                    <span className='block text-center font-semibold text-base'>Don&apos;t have an account ?<Link to={'/signup'} className='text-blue-600'>  Sign Up</Link></span>
                 </form>
             </div >
         </div >
