@@ -3,11 +3,32 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Avatar, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { LogOut, User2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
+import axios from 'axios';
+import { USER_API_END_POINT } from '@/utils/endPoints';
+import { setUser } from '@/redux/authSlice';
 
 const Navbar = () => {
     const {user} = useSelector(store=>store.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const logOutHandler = async () => {
+        try {
+            const res = await axios.get(`${USER_API_END_POINT}/logout`, {withCredentials:true});
+            if(res) {   
+                dispatch(setUser(null));
+                navigate('/');
+                toast.success(res.data.message); 
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response.data.message);
+        }
+    }
+
     return (
         <div className='bg-white border-b border-b-gray-300'>
             <div className='flex items-center justify-between mx-auto max-w-7xl h-16'>
@@ -25,17 +46,17 @@ const Navbar = () => {
                             <Popover>
                                 <PopoverTrigger asChild>
                                     <Avatar className='cursor-pointer'>
-                                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                        <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
                                     </Avatar>
                                 </PopoverTrigger>
                                 <PopoverContent className='w-80'>
                                     <div className='flex gap-5 space-y-2'>
                                         <Avatar className='cursor-pointer'>
-                                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                            <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
                                         </Avatar>
                                         <div>
-                                            <h3 className='font-medium'>Crazy Tiger</h3>
-                                            <p className='text-sm text-muted-foreground'>Here is one of the random text created in snippets.</p>
+                                            <h3 className='font-medium'>{user?.firstName + " " + user?.lastName}</h3>
+                                            <p className='text-sm text-muted-foreground'>{user?.profile?.bio}</p>
                                         </div>
                                     </div>
                                     <div className='flex flex-col my-2 mr-4 text-gray-700'>
@@ -45,7 +66,7 @@ const Navbar = () => {
                                         </div>
                                         <div className="flex w-fit items-center gap-2 cursor-pointer">
                                             <LogOut />
-                                            <Button variant="ghost">Logout</Button>
+                                            <Button onClick={logOutHandler} variant="ghost">Logout</Button>
                                         </div>
                                     </div>
                                 </PopoverContent>
