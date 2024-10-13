@@ -5,10 +5,8 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { Loader2 } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
-import { USER_API_END_POINT } from '@/utils/endPoints'
 import { toast } from 'sonner'
-import { setUser, updateProfile } from '@/redux/authSlice'
+import { updateProfile } from '@/redux/authSlice'
 
 const UpdateProfileDialog = ({open, setOpen}) => {
     const [loading, setLoading] = useState(false);
@@ -90,7 +88,7 @@ const UpdateProfileDialog = ({open, setOpen}) => {
         } catch (error) {
           toast.error("An error occurred");
         } finally {
-          setOpen(false);  // Close the dialog after submission
+          setOpen(false); 
         }
       };
       
