@@ -11,17 +11,17 @@ import { USER_API_END_POINT } from '@/utils/endPoints';
 import { setUser } from '@/redux/authSlice';
 
 const Navbar = () => {
-    const {user} = useSelector(store=>store.auth);
+    const { user } = useSelector(store => store.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const logOutHandler = async () => {
         try {
-            const res = await axios.get(`${USER_API_END_POINT}/logout`, {withCredentials:true});
-            if(res) {   
+            const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
+            if (res) {
                 dispatch(setUser(null));
                 navigate('/');
-                toast.success(res.data.message); 
+                toast.success(res.data.message);
             }
         } catch (error) {
             console.log(error);
@@ -37,9 +37,21 @@ const Navbar = () => {
                 </div>
                 <div className='flex items-center gap-12'>
                     <ul className='flex font-medium items-center gap-5'>
-                        <Link to={'/'}><li>Home</li></Link>
-                        <Link to={'/jobs'}><li>Jobs</li></Link>
-                        <Link to={'/browse'}><li>Browse</li></Link>
+                        {
+                            user && user.role === 'recruiter' ? (
+                                <>
+                                    <Link to={'/admin/companies'}><li>Companies</li></Link>
+                                    <Link to={'/admin/jobs'}><li>Jobs</li></Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link to={'/'}><li>Home</li></Link>
+                                    <Link to={'/jobs'}><li>Jobs</li></Link>
+                                    <Link to={'/browse'}><li>Browse</li></Link>
+                                </>
+                            )
+                        }
+
                     </ul>
                     {
                         user ? (
@@ -74,7 +86,7 @@ const Navbar = () => {
                         ) : (
                             <div className='flex items-center gap-4'>
                                 <Link to={'/signup'}><Button className='text-purple-700 font-bold border-2 border-purple-600 hover:scale-110 hover:text-black hover:bg-purple-500 hover:border-black'>Signup</Button></Link>
-                                <Link to={`/login`}><Button className='bg-purple-400 border-solid text-black font-bold border-black border-2 hover:scale-110 hover:bg-purple-500' >Login</Button></Link>                        
+                                <Link to={`/login`}><Button className='bg-purple-400 border-solid text-black font-bold border-black border-2 hover:scale-110 hover:bg-purple-500' >Login</Button></Link>
                             </div>
                         )
                     }
