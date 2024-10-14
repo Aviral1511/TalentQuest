@@ -6,6 +6,8 @@ import Jobs from './pages/Jobs'
 import Browse from './pages/Browse'
 import Profile from './pages/Profile'
 import JobDescription from './pages/JobDescription'
+import Companies from './components/admin/Companies'
+import RegisterCompany from './components/admin/RegisterCompany'
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
           <Route path="/job/description/:id" element={<JobDescription />} />
           <Route path="/browse" element={<Browse />} />
           <Route path="/profile" element={<Profile />}/>
+          <Route path="/admin/companies" element={<Companies />}/>
+          <Route path="/admin/companies/register" element={<RegisterCompany />}/>
         </Routes>
       </BrowserRouter>
     </>
