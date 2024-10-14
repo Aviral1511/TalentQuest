@@ -7,26 +7,32 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { COMPANY_API_END_POINT } from '@/utils/endPoints'
 import { toast } from 'sonner'
+import { useDispatch } from 'react-redux'
+import { setSingleCompany } from '@/redux/companySlice'
 
 const RegisterCompany = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [companyName, setCompanyName] = useState();
 
   const registerNewCompany = async () => {
     try {
-        const res = await axios.post(`${COMPANY_API_END_POINT}/register`, {companyName} , {
-          headers : {
-            'Content-Type':'application/json' 
-          },
-          withCredentials : true
-        });
-        if(res.data.success){
-          toast.success(res.data.message);
-          const companyId = res?.data?.company?._id;
-          navigate(`/admin/companies/${companyId}`); 
-        }
+      const res = await axios.post(`${COMPANY_API_END_POINT}/register`, { companyName }, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      });
+      console.log(res.data);
+      if (res.data.success) {
+        dispatch(setSingleCompany(res.data.company));
+        toast.success(res.data.message);
+        const companyId = res?.data?.company?._id;
+        navigate(`/admin/companies/${companyId}`);
+      }
     } catch (error) {
       console.log(error);
+      toast.error(error?.response?.data?.message);
     }
   }
 
@@ -40,16 +46,16 @@ const RegisterCompany = () => {
         </div>
 
         <Label>Company Name</Label>
-        <Input type="text"  placeholder="Microsoft, Google, etc" className='my-2'
+        <Input type="text" placeholder="Microsoft, Google, etc" className='my-2'
           onChange={(e) => setCompanyName(e.target.value)}
         />
         <div className='flex items-center gap-2 my-10'>
           <Button variant="outline" className="hover:bg-gray-200" onClick={() => navigate('/admin/companies')}>Cancel</Button>
-          <Button className="bg-gray-800 text-white hover:bg-black">Continue</Button>
+          <Button className="bg-gray-800 text-white hover:bg-black" onClick={registerNewCompany}>Continue</Button>
         </div>
 
       </div>
-      
+
     </div>
   )
 }

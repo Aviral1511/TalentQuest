@@ -8,15 +8,15 @@ export const registerCompany = async (req, res) => {
         }
         const comp = await Company.findOne({name : companyName});
         if(comp){
-            return res.status(400).json({message: "Cnnot register same company again", success:false});
+            return res.status(400).json({message: "Cannot register same company again", success:false});
         }
 
-        const comapny = await Company.create({
+        const company = await Company.create({
             name: companyName,
             userId : req.id
         });
 
-        res.status(201).json({message:"Company registered successfully", comapny, success:true});
+        res.status(201).json({message:"Company registered successfully", company, success:true});
     } catch (error) {
         console.log(error);
         res.status(400).json({
