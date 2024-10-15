@@ -5,16 +5,18 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import useGetAppliedJobs from '@/hooks/useGetAppliedJobs'
 import { Contact, Mail, Pen } from 'lucide-react'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 
-const hasResume = true;
 
 const Profile = () => {
+    useGetAppliedJobs();
     const [open, setOpen] = useState(false);
     const {user} = useSelector(store=>store.auth);
-    console.log(user);
+    // console.log(user);
+    const hasResume = user?.profile?.resume;
 
     return (
         <div>
