@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../shared/Navbar'
 import { Button } from '../ui/button'
 import { ArrowLeft, Loader2 } from 'lucide-react'
@@ -8,26 +8,31 @@ import { toast } from 'sonner'
 import axios from 'axios'
 import { COMPANY_API_END_POINT } from '@/utils/endPoints'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import useGetCompanyById from '@/hooks/useGetCompanyById'
 
 const CompanySetup = () => {
     const params = useParams();
+    useGetCompanyById(params.id);
     const naviagate = useNavigate();
     const companyId = params.id;
+
+    const { singleCompany } = useSelector(store => store.company);
 
     const [input, setInput] = useState({
         name: '',
         description: "",
-        website : '',
-        location :'',
-        file : null
+        website: '',
+        location: '',
+        file: null
     });
     const [loading, setLoading] = useState(false);
 
     const changeEventHandler = (e) => {
-        setInput({...input, [e.target.name]:e.target.value});
+        setInput({ ...input, [e.target.name]: e.target.value });
     };
     const changeFileHandler = (e) => {
-        setInput({...input, file:e.target.files?.[0]});
+        setInput({ ...input, file: e.target.files?.[0] });
     };
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -36,16 +41,16 @@ const CompanySetup = () => {
         formdata.append('description', input.description);
         formdata.append('website', input.website);
         formdata.append('location', input.location);
-        if(input.file){ formdata.append('file', input.file);}
+        if (input.file) { formdata.append('file', input.file); }
         try {
             setLoading(true);
             const res = await axios.put(`${COMPANY_API_END_POINT}/update/${companyId}`, formdata, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
-                withCredentials:true
+                withCredentials: true
             });
-            if(res?.data?.success){
+            if (res?.data?.success) {
                 toast.success(res.data.message);
                 naviagate('/admin/companies');
             }
@@ -55,8 +60,17 @@ const CompanySetup = () => {
         } finally {
             setLoading(false);
         }
-        
     }
+
+    useEffect(() => {
+        setInput({
+            name: singleCompany.name || '',
+            description: singleCompany.description || "",
+            website: singleCompany.website || '',
+            location: singleCompany.location || '',
+            file: singleCompany.file || null
+        })
+    }, [singleCompany]);
 
     return (
         <div>
@@ -117,8 +131,8 @@ const CompanySetup = () => {
                         </div>
                     </div>
                     {
-                        loading ? <Button className='w-full my-4'><Loader2 className='mr-2 h-4 w-4 animate-spin'/>Please Wait</Button> :
-                        <Button type='submit' className='w-full my-4 border border-black rounded-md bg-purple-400 hover:border-violet-600 hover:border-2 hover:bg-violet-500'>Update</Button>
+                        loading ? <Button className='w-full my-4'><Loader2 className='mr-2 h-4 w-4 animate-spin' />Please Wait</Button> :
+                            <Button type='submit' className='w-full my-4 border border-black rounded-md bg-purple-400 hover:border-violet-600 hover:border-2 hover:bg-violet-500'>Update</Button>
                     }
                 </form>
             </div>

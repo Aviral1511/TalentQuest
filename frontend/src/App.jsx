@@ -9,6 +9,8 @@ import JobDescription from './pages/JobDescription'
 import Companies from './components/admin/Companies'
 import RegisterCompany from './components/admin/RegisterCompany'
 import CompanySetup from './components/admin/CompanySetup'
+import AdminJobs from './components/admin/AdminJobs'
+import PostJob from './components/admin/PostJob'
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
           <Route path="/admin/companies" element={<Companies />} />
           <Route path="/admin/companies/register" element={<RegisterCompany />} />
           <Route path="/admin/companies/:id" element={<CompanySetup />} />
+          <Route path="/admin/jobs" element={<AdminJobs />} />
+          <Route path="/admin/jobs/create" element={<PostJob />} />
         </Routes>
       </BrowserRouter>
     </>

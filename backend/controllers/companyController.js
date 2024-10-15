@@ -1,4 +1,6 @@
 import {Company} from '../models/companySchema.js';
+import getDataUri from "../utils/datauri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const registerCompany = async (req, res) => {
     try {
@@ -29,11 +31,11 @@ export const registerCompany = async (req, res) => {
 export const getCompany = async (req, res) => {
     try {
         const userId = req.id;
-        const comapnies = await Company.find({userId});
-        if(!comapnies){
+        const companies = await Company.find({userId});
+        if(!companies){
             return res.status(404).json({message: "No company found", success:false});
         }
-        res.status(200).json({message:"Companies found successfully", comapnies, success:true});
+        res.status(200).json({message:"Companies found successfully", companies, success:true});
     } catch (error) {
         console.log(error);
         res.status(400).json({
@@ -62,12 +64,18 @@ export const getCompanyById = async (req, res) => {
 
 export const updateCompany = async (req, res) => {
     try {
-        const {name, description, website, loction} = req.body;
-        const file = req.file;
+        const {name, description, website, location} = req.body;
         //cloudinary
+        let logo = "https://th.bing.com/th/id/OIP.qgp1rab4Db9aIZJ56hTD4wHaFj?w=252&h=189&c=7&r=0&o=5&dpr=1.3&pid=1.7"; 
+        const file = req.file;
+        if (file) {
+            const fileUri = getDataUri(file);
+            const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+            logo = cloudResponse.secure_url; 
+        }
 
-        const upateData = {name, description, website, loction};
-        const company = await Company.findByIdAndUpdate(req.params.id, upateData, {new:true});
+        const updateData = {name, description, website, location, logo};
+        const company = await Company.findByIdAndUpdate(req.params.id, updateData, {new:true});
 
         if(!company){
             return res.status(404).json({message: "No company found", success:false});
