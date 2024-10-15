@@ -23,7 +23,7 @@ const Profile = () => {
                 <div className="flex justify-between">
                     <div className="flex items-center gap-4">
                         <Avatar className='h-24 w-24'>
-                            <AvatarImage src='https://th.bing.com/th/id/OIP.r0HtX7FMJKolxOsVnkW3CQHaGw?w=195&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7' alt='profile' />
+                            <AvatarImage src={user?.profile?.profilePhoto} alt='profile' />
                         </Avatar>
                         <div>
                             <h1 className='font-medium text-xl'>{user?.firstName + " " + user?.lastName}</h1>
@@ -53,7 +53,7 @@ const Profile = () => {
                 <div className='grid w-full max-w-sm items-center gap-1.5'>
                         <Label className='text-md font-bold'>Resume</Label>
                         {
-                            hasResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 hover:underline cursor-pointer w-full'>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
+                            hasResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 hover:underline cursor-pointer w-full'>{user?.profile?.resumeName}</a> : <span>NA</span>
                         }
                 </div>
             </div>

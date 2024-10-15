@@ -3,7 +3,7 @@ import { Badge } from '../ui/badge'
 
 const LatestJobCards = ({job}) => {
   return (
-    <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100 cursor-pointer hover:scale-105 hover:border-gray-300 hover:shadow-2xl'>
+    <div className='p-5 rounded-md shadow-xl bg-blue-50 border border-gray-100 cursor-pointer hover:scale-105 hover:border-gray-300 hover:shadow-2xl'>
       <div>
         <h1 className='font-medium text-lg'>{job?.company?.name}</h1>
         <p className='text-sm text-gray-500'>India</p>

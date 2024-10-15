@@ -3,7 +3,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Popover, PopoverTrigger } from '../ui/popover'
 import { PopoverContent } from '@radix-ui/react-popover'
-import { Edit2, MoreHorizontal } from 'lucide-react'
+import { Edit2, Eye, MoreHorizontal } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -46,10 +46,14 @@ const AdminJobsTable = () => {
                                 <TableCell className='text-right cursor-pointer'>
                                     <Popover>
                                         <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
-                                        <PopoverContent className='w-20 rounded-md border border-gray-300 shadow-md bg-gray-800 text-white'>
+                                        <PopoverContent className='w-36 rounded-md border border-gray-300 shadow-md bg-gray-800 text-white'>
                                             <div onClick={() => navigate(`/admin/companies/${job._id}`)} className='my-3 flex items-center justify-center z-10'>
-                                                <Edit2 />
+                                                <Edit2 className='mx-1'/>
                                                 <span>Edit</span>
+                                            </div>
+                                            <div onClick={() => navigate(`/admin/job/${job._id}/applicants`)} className='my-3 flex items-center justify-center z-10'>
+                                                <Eye className='mx-1'/>
+                                                <span>Applicants</span>
                                             </div>
                                         </PopoverContent>
                                     </Popover>

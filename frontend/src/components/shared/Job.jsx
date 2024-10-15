@@ -18,7 +18,7 @@ const Job = ({ job }) => {
     }
 
     return (
-        <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100 hover:scale-105 hover:shadow-lg'>
+        <div className='p-5 rounded-md shadow-xl bg-blue-50 border border-gray-100 hover:scale-105 hover:shadow-lg'>
             <div className="flex items-center justify-between">
                 <p className='text-sm text-gray-500'>{daysAgoFunc(job?.createdAt) === 0 ? "Today" : `${daysAgoFunc(job?.createdAt)} days ago`}</p>
                 <Button className='rounded-full' size='icons'><Bookmark /></Button>
@@ -27,7 +27,7 @@ const Job = ({ job }) => {
             <div className='flex items-center gap-2 my-2'>
                 <Button className='p-6' size='icon'>
                     <Avatar>
-                        <AvatarImage src='https://th.bing.com/th/id/OIP.r0HtX7FMJKolxOsVnkW3CQHaGw?w=195&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7' />
+                        <AvatarImage src={job?.company?.logo} />
                     </Avatar>
                 </Button>
                 <div>
