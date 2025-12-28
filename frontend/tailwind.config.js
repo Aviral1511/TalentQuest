@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import tailwindcss from '@tailwindcss/vite'
 export default {
     darkMode: ["class"],
     content: [
@@ -56,5 +57,6 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  // eslint-disable-next-line no-undef
+  plugins: [require("tailwindcss-animate"), tailwindcss(),],
 }

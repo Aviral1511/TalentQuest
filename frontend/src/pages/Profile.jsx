@@ -14,8 +14,8 @@ import { useSelector } from 'react-redux'
 const Profile = () => {
     useGetAppliedJobs();
     const [open, setOpen] = useState(false);
-    const {user} = useSelector(store=>store.auth);
-    // console.log(user);
+    const { user } = useSelector(store => store.auth);
+    console.log(user);
     const hasResume = user?.profile?.resume;
 
     return (
@@ -43,6 +43,10 @@ const Profile = () => {
                         <Contact />
                         <span>{user?.phoneNo}</span>
                     </div>
+                    <div className="flex items-center gap-4 my-3">
+                        <h2 className='font-semibold'>About Me :</h2>
+                        <span>{user?.profile?.bio}</span>
+                    </div>
                 </div>
                 <div className='my-3'>
                     <h1 className='font-medium text-lg'>Skills</h1>
@@ -53,17 +57,17 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className='grid w-full max-w-sm items-center gap-1.5'>
-                        <Label className='text-md font-bold'>Resume</Label>
-                        {
-                            hasResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 hover:underline cursor-pointer w-full'>{user?.profile?.resumeName}</a> : <span>NA</span>
-                        }
+                    <Label className='text-md font-bold'>Resume</Label>
+                    {
+                        hasResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 hover:underline cursor-pointer w-full'>{user?.profile?.resumeName}</a> : <span>NA</span>
+                    }
                 </div>
             </div>
             <div className='max-w-4xl mx-auto rounded-2xl'>
                 <h1 className='font-bold text-lg my-5'>Applied Jobs</h1>
                 <AppliedJobsTable />
             </div>
-            <UpdateProfileDialog open={open} setOpen={setOpen}/>
+            <UpdateProfileDialog open={open} setOpen={setOpen} />
         </div>
     )
 }

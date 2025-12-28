@@ -198,6 +198,7 @@ export const updateProfile = async (req, res) => {
                 skills: user.profile.skills,
                 resume: user.profile.resume,             // cloudinary URL
                 resumeName: user.profile.resumeName, // original file name of resume
+                profilePhoto: user.profile.profilePhoto
             },
             phoneNo: user.phoneNo
         };
